@@ -1,3 +1,22 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    header("Location: register.php"); // Redirect to registration/login page
+    exit();
+}
+
+// User is logged in; allow pollution reporting
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Assuming your report.php handles pollution reporting
+    include_once "report.php";
+}
+include_once "header.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +35,7 @@
         <h2>EcoSentinel - Pollution Reporting Platform</h2>
 
         <!-- Form for reporting pollution -->
-        <form action="report.php" method="post" id="reportForm">
+        <form action="index.php" method="post" id="reportForm">
             <label for="pollutionType">Type of Pollution:</label>
             <input type="text" name="pollutionType" required><br>
 
@@ -30,7 +49,6 @@
             <!-- Button to report pollution and get user's location -->
             <button type="button" onclick="getLocation()">Report Pollution</button>
         </form>
-
 
         <hr>
 
@@ -61,6 +79,10 @@
             document.getElementById("reportForm").submit();
         }
     </script>
+    <?php
+    // Include footer
+    include_once "footer.php";
+    ?>
 </body>
 
 </html>
